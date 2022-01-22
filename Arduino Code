@@ -1,0 +1,158 @@
+// Black Line Follower 
+int IR1=11;      //Right sensor
+int IR2=12;      //Middle Sensor
+int IR3=13;      //Left Sensor
+// motor one
+int enA = 2;    //Right motor
+int MotorAip1=9;
+int MotorAip2=6;
+// motor two
+int enB = 7;    //Left motor
+int MotorBip1=5;
+int MotorBip2=3;
+void setup() 
+{
+  // put your setup code here, to run once:
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(IR1,INPUT);
+  pinMode(IR2,INPUT);
+  pinMode(IR3,INPUT);
+  pinMode(MotorAip1,OUTPUT);
+  pinMode(MotorAip2,OUTPUT);
+  pinMode(MotorBip1,OUTPUT);
+  pinMode(MotorBip2,OUTPUT);
+  Serial.begin(9600);
+}
+void loop() 
+{
+   if(digitalRead(IR1)==0 && digitalRead(IR2)==0 && digitalRead(IR3)==0) //IR will not glow on black line
+  {
+    //Stop both Motors
+    digitalWrite(MotorAip1,HIGH);
+    digitalWrite(MotorAip2,LOW);
+    digitalWrite(MotorBip1,HIGH);
+    digitalWrite(MotorBip2,LOW);
+   analogWrite (enA, 150);
+   analogWrite (enB, 150);
+  }
+
+  else if(digitalRead(IR1)==1 && digitalRead(IR2)==0 && digitalRead(IR3)==1)  //IR not on black line
+  {
+    //Move both the Motors
+    digitalWrite(MotorAip1,HIGH);
+    digitalWrite(MotorAip2,LOW);
+    digitalWrite(MotorBip2,LOW);
+    digitalWrite(MotorBip1,HIGH);
+    analogWrite (enA, 150);
+    analogWrite (enB, 150);
+    Serial.println("ALL");
+    Serial.println(digitalRead(IR2));
+    
+  }
+
+  else if(digitalRead(IR1)==0 && digitalRead(IR2)==0 && digitalRead(IR3)==1)
+  {
+      //RIGHT
+      stop();
+      delay(1000);
+      digitalWrite(MotorAip1,LOW);     
+      digitalWrite(MotorAip2,HIGH);
+      digitalWrite(MotorBip2,LOW);
+      digitalWrite(MotorBip1,HIGH);
+      analogWrite (enA, 90);
+      analogWrite (enB, 90);
+      Serial.println("RIGHT");
+      Serial.println(digitalRead(IR1));
+      Serial.println(digitalRead(IR2));
+   //delay(100);
+
+  }
+
+  else if(digitalRead(IR1)==1 && digitalRead(IR2)==0 && digitalRead(IR3)==0)
+  {
+    //Tilt robot towards right by stopping the right wheel and moving the left one
+      stop();
+      delay(1000);
+      digitalWrite(MotorAip1,HIGH);     // If I want to turn right then the speed of the right wheel should be less than that of the left wheel, here, let a be the right wheel
+      digitalWrite(MotorAip2,LOW);
+      digitalWrite(MotorBip2,HIGH);
+      digitalWrite(MotorBip1,LOW);
+      analogWrite (enA, 90);
+      analogWrite (enB, 90);
+      Serial.println("LEFT");
+      Serial.println(digitalRead(IR2));
+      Serial.println(digitalRead(IR3));
+   //delay(100);
+
+  }
+   else if(digitalRead(IR1)==0 && digitalRead(IR2)==1 && digitalRead(IR3)==1)
+  {
+ //RIGHT
+    stop();
+    delay(1000);
+    digitalWrite(MotorAip1,LOW);     
+    digitalWrite(MotorAip2,HIGH);
+    digitalWrite(MotorBip2,LOW);
+    digitalWrite(MotorBip1,HIGH);
+    analogWrite (enA, 90);
+    analogWrite (enB, 90);
+    Serial.println("RIGHT");
+    Serial.println(digitalRead(IR1));
+    Serial.println(digitalRead(IR2));
+   //delay(100);
+
+  }
+   else if(digitalRead(IR1)==1 && digitalRead(IR2)==1 && digitalRead(IR3)==0)
+  {
+    //Tilt robot towards right by stopping the right wheel and moving the left one
+    stop();
+    delay(1000);
+    digitalWrite(MotorAip1,HIGH);     // If I want to turn right then the speed of the right wheel should be less than that of the left wheel, here, let a be the right wheel
+    digitalWrite(MotorAip2,LOW);
+    digitalWrite(MotorBip2,HIGH);
+    digitalWrite(MotorBip1,LOW);
+    analogWrite (enA, 90);
+    analogWrite (enB, 90);
+    Serial.println("LEFT");
+    Serial.println(digitalRead(IR2));
+    Serial.println(digitalRead(IR3));
+   //delay(100);
+
+  }
+  else if(digitalRead(IR1)==0 && digitalRead(IR2)==0 && digitalRead(IR3)==0) //IR will not glow on black line
+  {
+    //Stop both Motors
+    digitalWrite(MotorAip1,LOW);
+    digitalWrite(MotorAip2,LOW);
+    digitalWrite(MotorBip1,LOW);
+    digitalWrite(MotorBip2,LOW);
+    analogWrite (enA, 0);
+    analogWrite (enB, 0);
+  }
+
+
+  else
+  {
+    //Stop both the motors
+    digitalWrite(MotorAip1,LOW);
+    digitalWrite(MotorAip2,LOW);
+    digitalWrite(MotorBip1,LOW);
+    digitalWrite(MotorBip2,LOW);
+    analogWrite (enA, 0);
+    analogWrite (enB, 0);
+  }
+}
+
+
+
+void stop()
+{
+    digitalWrite(MotorAip1,LOW);
+    digitalWrite(MotorAip2,LOW);
+    digitalWrite(MotorBip1,LOW);
+    digitalWrite(MotorBip2,LOW);
+    analogWrite (enA, 0);
+    analogWrite (enB, 0);
+  
+}
